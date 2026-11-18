@@ -41,6 +41,22 @@ def init_db() -> None:
         );
     """)
 
+
+    # Tabel pengguna mahasiswa dan dosen
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password_hash TEXT NOT NULL,
+            role_id INTEGER NOT NULL,
+            is_active INTEGER NOT NULL DEFAULT 1,
+            created_at TEXT NOT NULL,
+            FOREIGN KEY (role_id)
+                REFERENCES roles(id)
+                ON DELETE RESTRICT
+        );
+    """)
+
     cur.execute("""
         CREATE TABLE IF NOT EXISTS documents (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -101,6 +117,7 @@ def init_db() -> None:
 
     default_roles = [
         ("mahasiswa", "Akses informasi akademik & layanan SSC untuk mahasiswa"),
+        ("dosen", "Akses informasi pengajaran, panduan internal dosen, dan kebijakan penilaian"),
     ]
     for role_name, desc in default_roles:
         cur.execute(

@@ -42,6 +42,12 @@
       </div>
 
       <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1.5 bg-zinc-100/90 border border-zinc-200/90 rounded-xl px-2.5 py-1.5">
+          <label for="roleSelector" class="text-[11px] font-medium text-zinc-500">Peran:</label>
+          <select id="roleSelector" onchange="onRoleChange()" class="text-xs font-semibold text-zinc-900 bg-transparent focus:outline-none cursor-pointer">
+            <option value="mahasiswa">Mahasiswa</option>
+          </select>
+        </div>
         <button id="clearChatBtn" type="button" onclick="clearPublicChatHistory()" class="hidden text-xs font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-xl transition cursor-pointer">
           + Chat Baru
         </button>
@@ -60,9 +66,15 @@
     <div id="chatBox" class="flex-1 space-y-5 overflow-y-auto pb-6">
       <!-- Hero Welcome Card -->
       <div id="welcomeState" class="bg-white border border-zinc-200/80 rounded-2xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-        <div class="inline-flex items-center gap-1.5 text-[11px] font-medium text-indigo-700 bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 rounded-full mb-3">
-          <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
-          Siap Membantu
+        <div class="flex items-center gap-2 mb-3">
+          <div class="inline-flex items-center gap-1.5 text-[11px] font-medium text-indigo-700 bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 rounded-full">
+            <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
+            Siap Membantu
+          </div>
+          <div class="inline-flex items-center gap-1.5 text-[11px] font-medium text-purple-700 bg-purple-50 border border-purple-200/80 px-2.5 py-0.5 rounded-full">
+            <span>Hak Akses:</span>
+            <span id="currentRoleBadge" class="font-semibold uppercase tracking-wider text-[10px]">MAHASISWA</span>
+          </div>
         </div>
         <h1 class="text-lg font-semibold tracking-tight text-zinc-900">Tanyakan Layanan &amp; Dokumen Akademik</h1>
         <p class="text-sm text-zinc-500 mt-1 leading-relaxed max-w-2xl">
@@ -435,11 +447,14 @@
       sendBtn.disabled = true;
       appendLoading();
 
+      const roleSelect = document.getElementById("roleSelector");
+      const currentRole = roleSelect ? roleSelect.value : (localStorage.getItem("chat_role") || "mahasiswa");
+
       try {
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question, role: "mahasiswa" }),
+          body: JSON.stringify({ question, role: currentRole }),
         });
         const data = await res.json();
         removeLoading();
@@ -477,8 +492,11 @@
       bodyEl.innerHTML = `<div class="text-xs text-zinc-500 py-8 text-center">Mengambil isi dokumen...</div>`;
       modal.classList.remove("hidden");
 
+      const roleSelect = document.getElementById("roleSelector");
+      const currentRole = roleSelect ? roleSelect.value : (localStorage.getItem("chat_role") || "mahasiswa");
+
       try {
-        const res = await fetch(`/api/public/documents/${docId}`);
+        const res = await fetch(`/api/public/documents/${docId}?role=${encodeURIComponent(currentRole)}`);
         const data = await res.json();
         if (!res.ok) {
           bodyEl.innerHTML = `<div class="text-xs text-red-600 py-8 text-center">${escapeHtml(data.detail || "Dokumen tidak ditemukan.")}</div>`;
@@ -511,7 +529,39 @@
       if (e.key === "Escape") closeSourceModal();
     });
 
-    (function restorePublicChat() {
+    window.onRoleChange = function () {
+      const select = document.getElementById("roleSelector");
+      if (!select) return;
+      const val = select.value;
+      localStorage.setItem("chat_role", val);
+      const badge = document.getElementById("currentRoleBadge");
+      if (badge) badge.textContent = val.toUpperCase();
+    };
+
+    async function loadPublicRoles() {
+      try {
+        const res = await fetch("/api/roles");
+        const data = await res.json();
+        const roles = data.roles || [];
+        const select = document.getElementById("roleSelector");
+        if (!select || roles.length === 0) return;
+
+        const savedRole = localStorage.getItem("chat_role") || "mahasiswa";
+        select.innerHTML = roles.map(r => `
+          <option value="${escapeHtml(r.name)}" ${r.name.toLowerCase() === savedRole.toLowerCase() ? "selected" : ""}>
+            ${escapeHtml(r.name.charAt(0).toUpperCase() + r.name.slice(1))}
+          </option>
+        `).join("");
+
+        const badge = document.getElementById("currentRoleBadge");
+        if (badge) badge.textContent = select.value.toUpperCase();
+      } catch (err) {
+        console.error("Gagal memuat roles publik:", err);
+      }
+    }
+
+    (function init() {
+      loadPublicRoles();
       const history = getPublicHistory();
       if (history.length > 0) {
         clearChatBtn.classList.remove("hidden");

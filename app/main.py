@@ -255,6 +255,10 @@ def delete_role(role_id: int, _admin: dict = Depends(get_current_admin)):
         conn.close()
         raise HTTPException(status_code=404, detail="Role tidak ditemukan.")
 
+    if row["name"].lower() == "mahasiswa":
+        conn.close()
+        raise HTTPException(status_code=400, detail="Role 'mahasiswa' adalah role default sistem dan tidak boleh dihapus.")
+
     cur.execute("DELETE FROM roles WHERE id = ?", (role_id,))
     conn.commit()
     conn.close()
@@ -577,7 +581,8 @@ def get_groq_quota(_admin: dict = Depends(get_current_admin)):
 
 
 @app.get("/api/public/documents/{doc_id}")
-def get_public_document(doc_id: int):
+def get_public_document(doc_id: int, role: str = "mahasiswa"):
+    role_clean = (role or "mahasiswa").strip().lower()
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
@@ -586,9 +591,9 @@ def get_public_document(doc_id: int):
         FROM documents d
         JOIN document_roles dr ON dr.document_id = d.id
         JOIN roles r ON r.id = dr.role_id
-        WHERE d.id = ? AND LOWER(r.name) = 'mahasiswa' AND d.is_active = 1
+        WHERE d.id = ? AND LOWER(r.name) = LOWER(?) AND d.is_active = 1
         """,
-        (doc_id,),
+        (doc_id, role_clean),
     )
     doc = cur.fetchone()
     if not doc:

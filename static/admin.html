@@ -71,6 +71,12 @@
           </div>
         </div>
         <div class="flex items-center gap-1.5 shrink-0">
+          <div class="flex items-center gap-1.5 bg-zinc-50 border border-zinc-200 rounded-lg px-2 py-1">
+            <span class="text-[11px] text-zinc-500 font-medium">Uji Role:</span>
+            <select id="adminChatRole" class="text-xs font-semibold text-indigo-700 bg-transparent focus:outline-none cursor-pointer">
+              <option value="mahasiswa">mahasiswa</option>
+            </select>
+          </div>
           <button type="button" onclick="startNewAdminChat()" class="text-[11px] font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100 px-2.5 py-1.5 rounded-lg transition cursor-pointer">
             + Chat Baru
           </button>
@@ -207,12 +213,18 @@
 
       <nav class="p-3 space-y-1 flex-1">
         <div class="px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Workspace</div>
-        <a href="#knowledge" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium bg-indigo-50/80 text-indigo-700">
+        <button id="navKnowledge" type="button" onclick="switchAdminTab('knowledge')" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium bg-indigo-50/80 text-indigo-700 transition cursor-pointer">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
           </svg>
           Knowledge Base
-        </a>
+        </button>
+        <button id="navRoles" type="button" onclick="switchAdminTab('roles')" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-zinc-600 hover:bg-zinc-100/80 hover:text-zinc-900 transition cursor-pointer">
+          <svg class="w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          Manajemen Role
+        </button>
         <button type="button" onclick="openChatModal()" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-zinc-600 hover:bg-zinc-100/80 hover:text-zinc-900 transition cursor-pointer">
           <svg class="w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
@@ -243,13 +255,15 @@
 
     <!-- Main Content -->
     <main class="flex-1 p-5 sm:p-8 max-w-6xl w-full space-y-6">
-      <div>
-        <h1 class="text-xl font-semibold tracking-tight text-zinc-900">Knowledge Base</h1>
-        <p class="text-xs text-zinc-500 mt-0.5">Unggah dan kelola dokumen referensi untuk Chatbot RAG.</p>
+      <div class="flex items-center justify-between flex-wrap gap-2">
+        <div>
+          <h1 id="pageTitle" class="text-xl font-semibold tracking-tight text-zinc-900">Knowledge Base</h1>
+          <p id="pageSubtitle" class="text-xs text-zinc-500 mt-0.5">Unggah dan kelola dokumen referensi untuk Chatbot RAG.</p>
+        </div>
       </div>
 
-      <!-- KPI Cards (2 Columns) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!-- KPI Cards (3 Columns) -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div class="bg-white border border-zinc-200/80 rounded-2xl p-4 shadow-[0_1px_2px_rgba(0,0,0,0.03)] flex items-center justify-between">
           <div>
             <div class="text-xs font-medium text-zinc-500">Total Dokumen</div>
@@ -258,6 +272,18 @@
           <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="bg-white border border-zinc-200/80 rounded-2xl p-4 shadow-[0_1px_2px_rgba(0,0,0,0.03)] flex items-center justify-between">
+          <div>
+            <div class="text-xs font-medium text-zinc-500">Total Role Aktif</div>
+            <div id="statRoles" class="text-2xl font-semibold text-zinc-900 mt-1">0</div>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
           </div>
         </div>
@@ -275,44 +301,103 @@
         </div>
       </div>
 
-      <!-- Upload & Documents Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <!-- Left: Upload Form -->
-        <div class="lg:col-span-5 bg-white border border-zinc-200/80 rounded-2xl p-5 shadow-[0_1px_2px_rgba(0,0,0,0.03)] h-fit">
-          <h2 class="text-sm font-semibold text-zinc-900">Upload Dokumen RAG</h2>
-          <p class="text-xs text-zinc-500 mt-0.5 mb-4">Dokumen akan diekstrak, di-chunking, dan diindeks ke database.</p>
+      <!-- Tab 1: Knowledge Base (Upload & Document List) -->
+      <div id="tabKnowledgeSection" class="space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Left: Upload Form -->
+          <div class="lg:col-span-5 bg-white border border-zinc-200/80 rounded-2xl p-5 shadow-[0_1px_2px_rgba(0,0,0,0.03)] h-fit">
+            <h2 class="text-sm font-semibold text-zinc-900">Upload Dokumen RAG</h2>
+            <p class="text-xs text-zinc-500 mt-0.5 mb-4">Dokumen akan diekstrak, di-chunking, dan dihubungkan ke role yang dipilih.</p>
 
-          <div id="uploadMsg" class="hidden mb-4 text-xs rounded-xl p-3"></div>
+            <div id="uploadMsg" class="hidden mb-4 text-xs rounded-xl p-3"></div>
 
-          <form id="uploadForm" class="space-y-4">
-            <div>
-              <label class="block text-xs font-medium text-zinc-700 mb-1.5">Judul Dokumen (opsional)</label>
-              <input id="docTitle" type="text" placeholder="Misal: Pedoman TAK 2025"
-                class="w-full border border-zinc-200 rounded-xl px-3.5 py-2 text-sm bg-zinc-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition" />
-            </div>
+            <form id="uploadForm" class="space-y-4">
+              <div>
+                <label class="block text-xs font-medium text-zinc-700 mb-1.5">Judul Dokumen (opsional)</label>
+                <input id="docTitle" type="text" placeholder="Misal: Pedoman TAK 2025"
+                  class="w-full border border-zinc-200 rounded-xl px-3.5 py-2 text-sm bg-zinc-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition" />
+              </div>
 
-            <!-- Custom Dropzone -->
-            <div>
-              <label class="block text-xs font-medium text-zinc-700 mb-1.5">File Dokumen (PDF, DOCX, TXT)</label>
-              <label for="docFile" class="flex flex-col items-center justify-center border-2 border-dashed border-zinc-200 hover:border-indigo-400 bg-zinc-50/60 hover:bg-indigo-50/30 rounded-xl p-5 cursor-pointer transition text-center">
-                <svg class="w-6 h-6 text-zinc-400 mb-1.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                </svg>
-                <span id="fileLabel" class="text-xs font-medium text-zinc-600">Klik untuk pilih file PDF, DOCX, XLSX, CSV, atau TXT</span>
-                <input id="docFile" type="file" accept=".pdf,.docx,.xlsx,.txt,.md,.csv" required class="hidden" />
-              </label>
-            </div>
+              <!-- Custom Dropzone -->
+              <div>
+                <label class="block text-xs font-medium text-zinc-700 mb-1.5">File Dokumen (PDF, DOCX, TXT, XLSX, CSV)</label>
+                <label for="docFile" class="flex flex-col items-center justify-center border-2 border-dashed border-zinc-200 hover:border-indigo-400 bg-zinc-50/60 hover:bg-indigo-50/30 rounded-xl p-5 cursor-pointer transition text-center">
+                  <svg class="w-6 h-6 text-zinc-400 mb-1.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                  </svg>
+                  <span id="fileLabel" class="text-xs font-medium text-zinc-600">Klik untuk pilih file PDF, DOCX, XLSX, CSV, atau TXT</span>
+                  <input id="docFile" type="file" accept=".pdf,.docx,.xlsx,.txt,.md,.csv" required class="hidden" />
+                </label>
+              </div>
 
-            <button id="uploadBtn" type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white text-xs font-medium px-5 py-2.5 rounded-xl shadow-xs transition cursor-pointer">
-              Upload &amp; Indeks Dokumen
-            </button>
-          </form>
+              <!-- Role Selector for Upload -->
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <label class="block text-xs font-medium text-zinc-700">Hak Akses Role (Wajib pilih)</label>
+                  <button type="button" onclick="toggleAllUploadRoles()" class="text-[11px] text-indigo-600 hover:text-indigo-800 font-medium cursor-pointer">Pilih Semua</button>
+                </div>
+                <div id="roleCheckboxesContainer" class="space-y-2 bg-zinc-50/70 border border-zinc-200 rounded-xl p-3 max-h-40 overflow-y-auto">
+                  <span class="text-xs text-zinc-400">Memuat role...</span>
+                </div>
+              </div>
+
+              <button id="uploadBtn" type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white text-xs font-medium px-5 py-2.5 rounded-xl shadow-xs transition cursor-pointer">
+                Upload &amp; Indeks Dokumen
+              </button>
+            </form>
+          </div>
+
+          <!-- Right: Document List -->
+          <div class="lg:col-span-7 bg-white border border-zinc-200/80 rounded-2xl p-5 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+            <h2 class="text-sm font-semibold text-zinc-900 mb-3">Daftar Dokumen Terindeks</h2>
+            <div id="docList" class="divide-y divide-zinc-100"></div>
+          </div>
         </div>
+      </div>
 
-        <!-- Right: Document List -->
-        <div class="lg:col-span-7 bg-white border border-zinc-200/80 rounded-2xl p-5 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
-          <h2 class="text-sm font-semibold text-zinc-900 mb-3">Daftar Dokumen Terindeks</h2>
-          <div id="docList" class="divide-y divide-zinc-100"></div>
+      <!-- Tab 2: Role Management -->
+      <div id="tabRolesSection" class="hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Left: Create Role Form -->
+          <div class="lg:col-span-5 bg-white border border-zinc-200/80 rounded-2xl p-5 shadow-[0_1px_2px_rgba(0,0,0,0.03)] h-fit">
+            <h2 class="text-sm font-semibold text-zinc-900">Tambah Role Baru</h2>
+            <p class="text-xs text-zinc-500 mt-0.5 mb-4">Buat role baru untuk membatasi dokumen yang dapat diakses chatbot.</p>
+
+            <div id="roleMsg" class="hidden mb-4 text-xs rounded-xl p-3"></div>
+
+            <form id="createRoleForm" class="space-y-4">
+              <div>
+                <label class="block text-xs font-medium text-zinc-700 mb-1.5">Nama Role</label>
+                <input id="roleNameInput" type="text" placeholder="Misal: dosen" required
+                  class="w-full border border-zinc-200 rounded-xl px-3.5 py-2 text-sm bg-zinc-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition" />
+                <p class="text-[11px] text-zinc-400 mt-1">Nama role akan otomatis diubah menjadi huruf kecil tanpa spasi.</p>
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-zinc-700 mb-1.5">Deskripsi Role</label>
+                <textarea id="roleDescInput" rows="2" placeholder="Akses panduan dan kebijakan akademik internal dosen"
+                  class="w-full border border-zinc-200 rounded-xl px-3.5 py-2 text-sm bg-zinc-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition"></textarea>
+              </div>
+
+              <button id="createRoleBtn" type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white text-xs font-medium px-5 py-2.5 rounded-xl shadow-xs transition cursor-pointer">
+                Simpan Role Baru
+              </button>
+            </form>
+          </div>
+
+          <!-- Right: Role List -->
+          <div class="lg:col-span-7 bg-white border border-zinc-200/80 rounded-2xl p-5 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <h2 class="text-sm font-semibold text-zinc-900">Daftar Role Aktif</h2>
+                <p class="text-xs text-zinc-500 mt-0.5">Role yang saat ini terdaftar dalam sistem RBAC.</p>
+              </div>
+              <button type="button" onclick="loadRoles()" class="text-xs font-medium text-indigo-600 hover:text-indigo-800 bg-indigo-50 px-2.5 py-1.5 rounded-lg transition cursor-pointer">
+                Refresh
+              </button>
+            </div>
+            <div id="rolesTableList" class="divide-y divide-zinc-100"></div>
+          </div>
         </div>
       </div>
     </main>
@@ -535,9 +620,34 @@
     function showDashboard() {
       loginSection.classList.add("hidden");
       dashboardSection.classList.remove("hidden");
-      loadRolesForUpload();
+      loadRoles();
       loadDocuments();
     }
+
+    window.switchAdminTab = function (tabName) {
+      const tabKnowledge = document.getElementById("tabKnowledgeSection");
+      const tabRoles = document.getElementById("tabRolesSection");
+      const navKnowledge = document.getElementById("navKnowledge");
+      const navRoles = document.getElementById("navRoles");
+      const pageTitle = document.getElementById("pageTitle");
+      const pageSubtitle = document.getElementById("pageSubtitle");
+
+      if (tabName === "roles") {
+        tabKnowledge.classList.add("hidden");
+        tabRoles.classList.remove("hidden");
+        navRoles.className = "w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium bg-indigo-50/80 text-indigo-700 transition cursor-pointer";
+        navKnowledge.className = "w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-zinc-600 hover:bg-zinc-100/80 hover:text-zinc-900 transition cursor-pointer";
+        pageTitle.textContent = "Manajemen Role Pengguna";
+        pageSubtitle.textContent = "Kelola peran pengguna (RBAC) untuk mengatur hak akses dokumen dan chatbot.";
+      } else {
+        tabRoles.classList.add("hidden");
+        tabKnowledge.classList.remove("hidden");
+        navKnowledge.className = "w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium bg-indigo-50/80 text-indigo-700 transition cursor-pointer";
+        navRoles.className = "w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-zinc-600 hover:bg-zinc-100/80 hover:text-zinc-900 transition cursor-pointer";
+        pageTitle.textContent = "Knowledge Base";
+        pageSubtitle.textContent = "Unggah dan kelola dokumen referensi untuk Chatbot RAG.";
+      }
+    };
 
     loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -565,11 +675,171 @@
       window.location.href = "/";
     });
 
+    let currentRolesCache = [];
+
+    window.loadRoles = async function () {
+      try {
+        const res = await fetch("/api/roles");
+        const data = await res.json();
+        const roles = data.roles || [];
+        currentRolesCache = roles;
+        defaultRoleIds = roles.map((r) => r.id);
+
+        // Update KPI
+        const statRoles = document.getElementById("statRoles");
+        if (statRoles) statRoles.textContent = roles.length;
+
+        // Update Checkboxes on Upload Form
+        const container = document.getElementById("roleCheckboxesContainer");
+        if (container) {
+          container.innerHTML = roles.length === 0
+            ? '<span class="text-xs text-red-500">Belum ada role terdaftar. Silakan buat role di Manajemen Role.</span>'
+            : roles.map((r) => `
+                <label class="flex items-start gap-2.5 p-2 rounded-lg hover:bg-white transition cursor-pointer border border-transparent hover:border-zinc-200">
+                  <input type="checkbox" name="uploadRole" value="${r.id}" checked class="mt-0.5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer" />
+                  <div class="min-w-0 flex-1">
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-xs font-semibold text-zinc-900 capitalize">${escapeHtml(r.name)}</span>
+                      <span class="text-[10px] bg-indigo-50 text-indigo-700 px-1.5 py-0.2 rounded font-medium">${r.name === 'mahasiswa' ? 'Default' : 'Custom'}</span>
+                    </div>
+                    <p class="text-[11px] text-zinc-500 leading-tight mt-0.5">${escapeHtml(r.description || 'Tidak ada deskripsi')}</p>
+                  </div>
+                </label>
+              `).join("");
+        }
+
+        // Update Role List in Role Management Tab
+        const tableList = document.getElementById("rolesTableList");
+        if (tableList) {
+          tableList.innerHTML = roles.length === 0
+            ? '<div class="py-8 text-center text-xs text-zinc-400">Belum ada role yang terdaftar.</div>'
+            : roles.map((r) => {
+                const isMahasiswa = r.name.toLowerCase() === "mahasiswa";
+                return `
+                  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-3.5 first:pt-0 last:pb-0">
+                    <div class="min-w-0 flex-1">
+                      <div class="flex items-center gap-2">
+                        <span class="text-sm font-semibold text-zinc-900 capitalize">${escapeHtml(r.name)}</span>
+                        <span class="text-[10px] font-medium px-2 py-0.5 rounded-md ${isMahasiswa ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-purple-50 text-purple-700 border border-purple-200'}">
+                          ${escapeHtml(r.name)}
+                        </span>
+                      </div>
+                      <p class="text-xs text-zinc-500 mt-1">${escapeHtml(r.description || 'Tidak ada deskripsi.')}</p>
+                      <div class="text-[11px] text-zinc-400 mt-1">${r.document_count || 0} dokumen dapat diakses</div>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                      ${
+                        isMahasiswa
+                          ? '<span class="text-[11px] text-zinc-400 italic px-2 py-1 bg-zinc-50 rounded-lg">Role Sistem</span>'
+                          : `<button type="button" onclick="deleteRole(${r.id}, '${escapeHtml(r.name)}')" class="text-xs text-red-600 hover:bg-red-50 font-medium px-2.5 py-1.5 rounded-lg transition cursor-pointer">Hapus Role</button>`
+                      }
+                    </div>
+                  </div>
+                `;
+              }).join("");
+        }
+
+        // Update Role dropdown in Admin Chat Modal
+        const chatRoleSelect = document.getElementById("adminChatRole");
+        if (chatRoleSelect) {
+          const prevVal = chatRoleSelect.value;
+          chatRoleSelect.innerHTML = roles.map(r => `<option value="${escapeHtml(r.name)}">${escapeHtml(r.name)}</option>`).join("");
+          if (prevVal && roles.some(r => r.name === prevVal)) {
+            chatRoleSelect.value = prevVal;
+          }
+        }
+      } catch (err) {
+        console.error("Gagal memuat roles:", err);
+      }
+    };
+
+    window.toggleAllUploadRoles = function () {
+      const boxes = document.querySelectorAll('input[name="uploadRole"]');
+      if (boxes.length === 0) return;
+      const anyUnchecked = Array.from(boxes).some(b => !b.checked);
+      boxes.forEach(b => b.checked = anyUnchecked);
+    };
+
+    // Form Tambah Role
+    const createRoleForm = document.getElementById("createRoleForm");
+    if (createRoleForm) {
+      createRoleForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const roleMsg = document.getElementById("roleMsg");
+        roleMsg.classList.add("hidden");
+
+        const nameInput = document.getElementById("roleNameInput");
+        const descInput = document.getElementById("roleDescInput");
+        const name = nameInput.value.trim().toLowerCase();
+        const description = descInput.value.trim();
+
+        if (!name) {
+          roleMsg.className = "mb-4 text-xs rounded-xl p-3 bg-red-50 text-red-700 border border-red-200";
+          roleMsg.textContent = "Nama role wajib diisi.";
+          roleMsg.classList.remove("hidden");
+          return;
+        }
+
+        const btn = document.getElementById("createRoleBtn");
+        btn.disabled = true;
+        btn.textContent = "Menyimpan...";
+
+        try {
+          const res = await fetch("/api/roles", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${getToken()}`,
+            },
+            body: JSON.stringify({ name, description }),
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            roleMsg.className = "mb-4 text-xs rounded-xl p-3 bg-red-50 text-red-700 border border-red-200";
+            roleMsg.textContent = data.detail || "Gagal membuat role.";
+          } else {
+            roleMsg.className = "mb-4 text-xs rounded-xl p-3 bg-emerald-50 text-emerald-700 border border-emerald-200";
+            roleMsg.textContent = `Role '${name}' berhasil ditambahkan.`;
+            nameInput.value = "";
+            descInput.value = "";
+            showToast(`Role '${name}' berhasil dibuat`);
+            await loadRoles();
+          }
+          roleMsg.classList.remove("hidden");
+        } catch {
+          roleMsg.className = "mb-4 text-xs rounded-xl p-3 bg-red-50 text-red-700 border border-red-200";
+          roleMsg.textContent = "Terjadi kesalahan saat menghubungi server.";
+          roleMsg.classList.remove("hidden");
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Simpan Role Baru";
+        }
+      });
+    }
+
+    window.deleteRole = async function (roleId, roleName) {
+      if (!confirm(`Hapus role '${roleName}'? Dokumen yang terikat ke role ini tidak akan terhapus, namun tidak dapat diakses lagi oleh role ini.`)) return;
+
+      try {
+        const res = await fetch(`/api/roles/${roleId}`, {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${getToken()}` },
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          alert(data.detail || "Gagal menghapus role.");
+          return;
+        }
+        showToast(data.message || `Role '${roleName}' berhasil dihapus.`);
+        await loadRoles();
+        await loadDocuments();
+      } catch {
+        alert("Terjadi kesalahan saat menghapus role.");
+      }
+    };
+
     async function loadRolesForUpload() {
-      const res = await fetch("/api/roles");
-      const data = await res.json();
-      const roles = data.roles || [];
-      defaultRoleIds = roles.map((r) => r.id);
+      await loadRoles();
     }
 
     async function loadDocuments() {
@@ -597,6 +867,9 @@
             const statusBadge = isActive
               ? ""
               : `<span class="text-[11px] bg-amber-50 text-amber-700 border border-amber-200/80 px-2 py-0.5 rounded-md font-medium">Nonaktif</span>`;
+            const roleBadges = (d.roles && d.roles.length > 0)
+              ? d.roles.map(r => `<span class="text-[11px] bg-purple-50 text-purple-700 border border-purple-200/80 px-2 py-0.5 rounded-md font-medium">Role: ${escapeHtml(r.name)}</span>`).join(" ")
+              : `<span class="text-[11px] bg-zinc-100 text-zinc-600 border border-zinc-200 px-2 py-0.5 rounded-md font-medium">Semua Role</span>`;
             const toggleLabel = isActive ? "Nonaktifkan" : "Aktifkan";
             const toggleCls = isActive
               ? "text-xs text-amber-600 hover:bg-amber-50 font-medium px-2.5 py-1.5 rounded-lg transition cursor-pointer"
@@ -608,7 +881,7 @@
                     ${escapeHtml(d.title)}
                   </button>
                   <div class="text-xs text-zinc-500 mt-0.5">${d.total_chunks} chunks</div>
-                  <div class="flex flex-wrap gap-1 mt-1.5">${fileBadge}${statusBadge}</div>
+                  <div class="flex flex-wrap items-center gap-1.5 mt-2">${fileBadge}${statusBadge}${roleBadges}</div>
                 </div>
                 <div class="flex items-center gap-1.5 shrink-0">
                   <button type="button" onclick="viewChunks(${d.id})"
@@ -633,14 +906,27 @@
       e.preventDefault();
       uploadMsg.classList.add("hidden");
 
-      if (defaultRoleIds.length === 0) {
-        await loadRolesForUpload();
+      if (!docFileInput.files || !docFileInput.files[0]) {
+        uploadMsg.className = "mb-4 text-xs rounded-xl p-3 bg-red-50 text-red-700 border border-red-200";
+        uploadMsg.textContent = "Silakan pilih file dokumen terlebih dahulu.";
+        uploadMsg.classList.remove("hidden");
+        return;
+      }
+
+      const checkedBoxes = document.querySelectorAll('input[name="uploadRole"]:checked');
+      const selectedRoleIds = Array.from(checkedBoxes).map(cb => parseInt(cb.value));
+
+      if (selectedRoleIds.length === 0) {
+        uploadMsg.className = "mb-4 text-xs rounded-xl p-3 bg-red-50 text-red-700 border border-red-200";
+        uploadMsg.textContent = "Pilih minimal satu role yang berhak mengakses dokumen ini.";
+        uploadMsg.classList.remove("hidden");
+        return;
       }
 
       const formData = new FormData();
       formData.append("file", docFileInput.files[0]);
       formData.append("title", document.getElementById("docTitle").value.trim());
-      formData.append("role_ids", JSON.stringify(defaultRoleIds));
+      formData.append("role_ids", JSON.stringify(selectedRoleIds));
 
       const btn = document.getElementById("uploadBtn");
       btn.disabled = true;
@@ -660,8 +946,8 @@
           uploadMsg.className = "mb-4 text-xs rounded-xl p-3 bg-emerald-50 text-emerald-700 border border-emerald-200";
           uploadMsg.textContent = data.message;
           document.getElementById("uploadForm").reset();
-          loadRolesForUpload();
-          fileLabel.textContent = "Klik untuk pilih file PDF, DOCX, atau TXT";
+          await loadRoles();
+          fileLabel.textContent = "Klik untuk pilih file PDF, DOCX, XLSX, CSV, atau TXT";
           fileLabel.classList.remove("text-indigo-700");
           loadDocuments();
         }
@@ -980,11 +1266,13 @@
       adminChatBox.appendChild(loadingEl);
       adminChatBox.scrollTop = adminChatBox.scrollHeight;
 
+      const activeRole = document.getElementById("adminChatRole") ? document.getElementById("adminChatRole").value : "mahasiswa";
+
       try {
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question, role: "mahasiswa" }),
+          body: JSON.stringify({ question, role: activeRole }),
         });
         const data = await res.json();
         loadingEl.remove();

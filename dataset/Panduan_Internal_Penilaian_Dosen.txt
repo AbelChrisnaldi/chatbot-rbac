@@ -1,0 +1,43 @@
+# PANDUAN DAN KEBIJAKAN INTERNAL PENILAIAN DOSEN TAHUN AKADEMIK 2026
+
+## 1. TUJUAN DAN SIFAT DOKUMEN
+Dokumen ini bersifat RAHASIA DAN KHUSUS DOSEN PENGAMPU MATA KULIAH. Dokumen ini tidak boleh dipublikasikan atau dibagikan kepada mahasiswa. Berisi pedoman operasional penilaian internal, pembobotan nilai akhir, batas toleransi remedial, serta mekanisme penindakan pelanggaran integritas akademik.
+
+## 2. KOMPOSISI DAN PEMBOBOTAN STANDAR NILAI AKHIR
+Setiap dosen pengampu wajib menginput nilai dengan formula pembobotan resmi fakultas:
+- Tugas Mandiri dan Terstruktur: 20%
+- Kuis Harian / Diskusi Kelas: 15%
+- Ujian Tengah Semester (UTS): 30%
+- Ujian Akhir Semester (UAS): 35%
+
+Komponen nilai praktikum (khusus mata kuliah berbasis lab):
+- Nilai Responsif & Jurnal: 30%
+- Proyek Terbimbing: 30%
+- Ujian Praktikum Akhir (UPA): 40%
+
+## 3. STANDAR KONVERSI NILAI ANGKA KE HURUF MUTU INTERNAL
+Konversi nilai akhir angka ke huruf mutu skala 4.0 adalah sebagai berikut:
+- Nilai A  (4.00) : 85.00 - 100.00 (Sangat Istimewa / Sangat Memuaskan)
+- Nilai AB (3.50) : 77.50 - 84.99 (Antara Sangat Baik dan Istimewa)
+- Nilai B  (3.00) : 70.00 - 77.49 (Baik / Memuaskan)
+- Nilai BC (2.50) : 62.50 - 69.99 (Cukup Baik)
+- Nilai C  (2.00) : 55.00 - 62.49 (Cukup / Syarat Minimal Kelulusan Mata Kuliah Utama)
+- Nilai D  (1.00) : 45.00 - 54.99 (Kurang / Wajib Mengulang atau Remedial)
+- Nilai E  (0.00) : 0.00 - 44.99 (Gagal / Tidak Lulus)
+
+## 4. KEBIJAKAN REMEDIAL DAN PERBAIKAN NILAI
+Pemberian ujian perbaikan (Remedial) hanya diperbolehkan dengan ketentuan ketat:
+1. Batas Nilai: Hanya mahasiswa dengan nilai akhir 'D' yang berhak mengajukan permohonan remedial. Mahasiswa dengan nilai 'E' wajib mengulang mata kuliah di semester berikutnya.
+2. Syarat Presensi: Tingkat kehadiran mahasiswa di kelas minimal 75% dari total tatap muka perkuliahan.
+3. Maksimal Nilai Perbaikan: Nilai tertinggi setelah remedial yang dapat diberikan dosen adalah huruf mutu 'B' (skor maksimal 70.00). Dosen dilarang memberikan nilai di atas 'B' untuk hasil ujian remedial.
+
+## 5. PENANGANAN KECURANGAN DAN PLAGIARISME
+1. Toleransi Similarity: Batas maksimal kesamaan dokumen tugas mandiri menggunakan Turnitin/iThenticate adalah 25%.
+2. Sanksi Tingkat 1 (Similarity 26% - 40%): Nilai tugas otomatis dipotong 50% dan diberikan kesempatan revisi satu kali dalam waktu 3x24 jam.
+3. Sanksi Tingkat 2 (Similarity > 40% atau Joki Tugas): Nilai komponen tugas langsung diberi angka 0 (nol).
+4. Kecurangan Ujian UTS/UAS: Mahasiswa yang terbukti menggunakan contekan, joki ujian, atau komunikasi tidak sah saat ujian langsung digugurkan dengan nilai akhir 'E' untuk mata kuliah bersangkutan dan dilaporkan ke Komite Etik Fakultas melalui Kode Insiden: ETH-DOS-2026.
+
+## 6. BATAS WAKTU DAN PROSEDUR INPUT NILAI
+- Dosen wajib menyelesaikan koreksi dan mengunggah nilai akhir ke Sistem Informasi Akademik (SIAKAD) paling lambat 7 (tujuh) hari kalender setelah jadwal pelaksanaan UAS mata kuliah terkait.
+- Keterlambatan input nilai tanpa konfirmasi resmi ke Dekanat akan mengakibatkan penangguhan insentif kinerja dosen semester berjalan.
+- Kode otentikasi verifikasi berkas nilai internal dosen: DOSEN-VAL-2026-CONF.
