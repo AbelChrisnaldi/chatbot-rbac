@@ -41,20 +41,24 @@ def seed_default_documents() -> None:
 
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("SELECT COUNT(*) AS cnt FROM documents")
-    if cur.fetchone()["cnt"] > 0:
-        conn.close()
-        return
 
-    cur.execute("SELECT id FROM roles WHERE LOWER(name) = 'mahasiswa'")
-    role_row = cur.fetchone()
-    if not role_row:
+    cur.execute("SELECT id, name FROM roles")
+    roles = {row["name"].lower(): row["id"] for row in cur.fetchall()}
+    mhs_id = roles.get("mahasiswa")
+    dsn_id = roles.get("dosen")
+
+    if not mhs_id:
         conn.close()
         return
-    role_id = role_row["id"]
 
     for file_path in sorted(DATASET_DIR.iterdir()):
         if not file_path.is_file() or file_path.suffix.lower() not in {".txt", ".md", ".pdf", ".docx", ".csv", ".xlsx"}:
+            continue
+
+        doc_title = file_path.stem.replace("_", " ")
+
+        cur.execute("SELECT id FROM documents WHERE title = ?", (doc_title,))
+        if cur.fetchone():
             continue
 
         file_bytes = file_path.read_bytes()
@@ -73,19 +77,20 @@ def seed_default_documents() -> None:
         stored_filename = f"default_{safe_name}"
         (UPLOAD_DIR / stored_filename).write_bytes(file_bytes)
 
-        doc_title = file_path.stem.replace("_", " ")
         ext = file_path.suffix.lstrip(".").lower() or "txt"
         now = datetime.now(timezone.utc).isoformat()
 
         cur.execute(
-            "INSERT INTO documents (title, filename, file_type, total_chunks, uploaded_at) VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO documents (title, filename, file_type, total_chunks, is_active, uploaded_at) VALUES (?, ?, ?, ?, 1, ?)",
             (doc_title, stored_filename, ext, len(chunks), now),
         )
         doc_id = cur.lastrowid
 
+        assigned_role_id = dsn_id if ("dosen" in file_path.name.lower() and dsn_id) else mhs_id
+
         cur.execute(
             "INSERT OR IGNORE INTO document_roles (document_id, role_id) VALUES (?, ?)",
-            (doc_id, role_id),
+            (doc_id, assigned_role_id),
         )
 
         for idx, ch in enumerate(chunks):
